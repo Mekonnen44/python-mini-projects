@@ -1,8 +1,13 @@
 # Python Mini Projects
 
-Small CLI-based Python tools.
+CLI-based Python tools to practice logic building and file handling.
 
-Projects:
-- Todo CLI
+## Projects
+- Todo CLI (with JSON storage)
 - Number Guessing Game
 - File Organizer
+
+## Concepts Used
+- File handling
+- Loops and conditions
+- CLI interaction
