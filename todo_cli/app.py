@@ -1,30 +1,51 @@
 import json
+import os
 
-FILE = "tasks.json"
+FILE = "data.json"
 
-def load_tasks():
-    try:
-        with open(FILE, "r") as f:
-            return json.load(f)
-    except:
+def load_data():
+    if not os.path.exists(FILE):
         return []
 
-def save_tasks(tasks):
+    with open(FILE, "r") as f:
+        return json.load(f)
+
+def save_data(data):
     with open(FILE, "w") as f:
-        json.dump(tasks, f)
+        json.dump(data, f, indent=4)
 
-tasks = load_tasks()
+def add_task(tasks):
+    title = input("Enter task: ")
+    tasks.append({"id": len(tasks)+1, "title": title})
+    
+def update_task(tasks):
+    task_id = int(input("Enter task id to update: "))
+    for task in tasks:
+        if task["id"] == task_id:
+            new_title = input("New title: ")
+            task["title"] = new_title
+            
+def delete_task(tasks):
+    task_id = int(input("Enter task id to delete: "))
+    tasks[:] = [t for t in tasks if t["id"] != task_id]
 
-while True:
-    print("\n1. Add Task\n2. View Tasks\n3. Exit")
-    choice = input("Choose: ")
+def main():
+    tasks = load_data()
 
-    if choice == "1":
-        task = input("Enter task: ")
-        tasks.append(task)
-        save_tasks(tasks)
-    elif choice == "2":
-        for i, t in enumerate(tasks):
-            print(f"{i+1}. {t}")
-    elif choice == "3":
-        break
+    while True:
+        print("\n1.Add 2.Update 3.Delete 4.View 5.Exit")
+        choice = input("Choose: ")
+
+        if choice == "1":
+            add_task(tasks)
+        elif choice == "2":
+            update_task(tasks)
+        elif choice == "3":
+            delete_task(tasks)
+        elif choice == "4":
+            print(tasks)
+        elif choice == "5":
+            save_data(tasks)
+            break
+
+main()
